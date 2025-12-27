@@ -14,11 +14,10 @@ pop
 push 99
 """
 
-ops_text = st.text_area("Operaciones (push/pop):", value=default_ops, height=180)
-
-colA, colB = st.columns([1, 2], gap="large")
+colA, colB = st.columns([2, 1], gap="large")
 
 with colA:
+    ops_text = st.text_area("Operaciones (push/pop):", value=default_ops, height=180)
     if st.button("Construir pasos", type="primary"):
         try:
             ops = parse_operations(ops_text)
@@ -52,6 +51,6 @@ with colB:
     stepper = st.session_state.get("stack_stepper")
     if stepper is not None:
         step = stepper.current()
-        st.graphviz_chart(step.dot, use_container_width=True)
+        st.graphviz_chart(step.dot, use_container_width=True, height=700)
     else:
         st.info("Aquí se mostrará el diagrama cuando construyas pasos.")

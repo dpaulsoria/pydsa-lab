@@ -5,7 +5,7 @@ from typing import Any, Literal
 
 from core.structures.stack import Stack
 
-OpKind = Literal["push", "pop"]
+OpKind = Literal["push", "pop", "peek"]
 
 
 @dataclass(frozen=True)
@@ -44,8 +44,10 @@ def parse_operations(text: str) -> list[Operation]:
             ops.append(Operation(kind="push", value=_parse_value(parts[1])))
         elif cmd == "pop":
             ops.append(Operation(kind="pop"))
+        elif cmd == "peek":
+            ops.append(Operation(kind="peek"))
         else:
-            raise ValueError(f"Línea {i}: comando no válido '{parts[0]}'. Usa push/pop.")
+            raise ValueError(f"Línea {i}: comando no válido '{parts[0]}'. Usa push/pop/peek.")
     return ops
 
 
@@ -61,7 +63,8 @@ def build_steps(ops: list[Operation], dot_builder: callable) -> list[Step]:
             steps.append(
                 Step(dot=dot_builder(s.to_list()), stack=s.to_list(), message=f"push {op.value}")
             )
-        else:  # pop
+
+        elif op.kind == "pop":
             try:
                 removed = s.pop()
                 steps.append(
@@ -78,5 +81,11 @@ def build_steps(ops: list[Operation], dot_builder: callable) -> list[Step]:
                     )
                 )
                 break
+
+        else:  # peek
+            top = s.peek()
+            steps.append(
+                Step(dot=dot_builder(s.to_list()), stack=s.to_list(), message=f"peek → {top}")
+            )
 
     return steps
