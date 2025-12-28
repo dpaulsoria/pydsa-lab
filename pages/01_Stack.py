@@ -4,7 +4,7 @@ from core.algos.stack_ops import build_steps, parse_operations
 from core.render.stack_graphviz import stack_to_dot
 from core.stepper import Stepper
 
-st.title("Stack (Pila) — Visualizador")
+st.title("Stack (Pila) — Visualizadora (LIFO)")
 
 default_ops = """# Ejemplo
 push 10
@@ -51,6 +51,6 @@ with colB:
     stepper = st.session_state.get("stack_stepper")
     if stepper is not None:
         step = stepper.current()
-        st.graphviz_chart(step.dot, use_container_width=True, height=700)
+        st.graphviz_chart(step.dot, use_container_width=True, width="stretch", height="stretch")
     else:
         st.info("Aquí se mostrará el diagrama cuando construyas pasos.")
