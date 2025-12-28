@@ -2,6 +2,9 @@ import streamlit as st
 
 from core.algos.linked_list_ops import build_steps, parse_operations
 from core.stepper import Stepper
+from core.ui.sidebar import render_sidebar_nav
+
+render_sidebar_nav()
 
 st.title("LInked List - Visualizador")
 
