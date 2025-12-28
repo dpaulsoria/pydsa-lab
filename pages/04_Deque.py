@@ -1,0 +1,53 @@
+import streamlit as st
+
+from core.algos.deque_ops import build_steps, parse_operations
+from core.render.deque_graphviz import deque_to_dot
+from core.stepper import Stepper
+from core.ui.sidebar import render_sidebar_nav
+
+render_sidebar_nav()
+st.title("Deque (Doble cola) — Visualizador")
+
+default_ops = """# Ejemplo
+push_back 8
+push_back 3
+push_front 1
+pop_back
+push_front 9
+pop_front
+"""
+
+ops_text = st.text_area(
+    "Operaciones (push_front/push_back/pop_front/pop_back):",
+    value=default_ops,
+    height=180,
+)
+
+if st.button("Construir pasos", type="primary"):
+    try:
+        ops = parse_operations(ops_text)
+        steps = build_steps(ops, dot_builder=deque_to_dot)
+        st.session_state["deque_stepper"] = Stepper(steps=steps, index=0)
+    except ValueError as e:
+        st.error(str(e))
+
+stepper: Stepper | None = st.session_state.get("deque_stepper")
+
+if stepper is None:
+    st.warning("Pulsa **Construir pasos** para generar la simulación.")
+else:
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        if st.button("Prev", disabled=not stepper.can_prev()):
+            stepper.prev()
+    with c2:
+        if st.button("Reset"):
+            stepper.reset()
+    with c3:
+        if st.button("Next", disabled=not stepper.can_next()):
+            stepper.next()
+
+    step = stepper.current()
+    st.graphviz_chart(step.dot, use_container_width=True, height=520)
+    st.write(f"**Acción:** {step.message}")
+    st.code(f"Deque: {step.deque}", language="python")
