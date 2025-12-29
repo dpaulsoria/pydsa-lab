@@ -1,39 +1,37 @@
 import streamlit as st
 
-from core.algos.queue_ops import build_steps, parse_operations
-from core.render.queue_graphviz import queue_to_dot
+from core.algos.skip_list_ops import build_steps, parse_operations
+from core.render.skip_list_graphviz import skip_list_to_dot
 from core.stepper import Stepper
 from core.ui.sidebar import render_sidebar_nav
 
 render_sidebar_nav()
+st.title("Skip List — Visualizer")
 
-st.title("Queue (Cola) — Visualizer (FIFO)")
-
-default_ops = """# Ejemplo FIFO
-enqueue 8
-enqueue 3
-enqueue 2
-dequeue
-enqueue 1
+default_ops = """# Tip: para hacerlo determinista, usa insert VAL NIVEL
+insert 10 2
+insert 20 0
+insert 30 1
+search 20
+delete 10
+search 10
+insert 25 2
 """
 
-ops_text = st.text_area("Operaciones (enqueue/dequeue):", value=default_ops, height=180)
+ops_text = st.text_area("Operaciones (insert/delete/search):", value=default_ops, height=220)
 
-# 1) construir pasos
 if st.button("Construir pasos", type="primary"):
     try:
         ops = parse_operations(ops_text)
-        steps = build_steps(ops, dot_builder=queue_to_dot)
-        st.session_state["queue_stepper"] = Stepper(steps=steps, index=0)
+        steps = build_steps(ops, dot_builder=skip_list_to_dot)
+        st.session_state["skip_stepper"] = Stepper(steps=steps, index=0)
     except ValueError as e:
         st.error(str(e))
 
-stepper: Stepper | None = st.session_state.get("queue_stepper")
+stepper: Stepper | None = st.session_state.get("skip_stepper")
 
-# 2) navegación
 if stepper is None:
     st.warning("Pulsa **Construir pasos** para generar la simulación.")
-    st.info("Aquí se mostrará el diagrama cuando construyas pasos.")
 else:
     c1, c2, c3 = st.columns(3)
     with c1:
@@ -49,9 +47,6 @@ else:
     st.caption(f"Paso {stepper.index + 1} / {len(stepper.steps)}")
     step = stepper.current()
 
-    # 3) diagrama
-    st.graphviz_chart(step.dot, width="stretch", height="stretch")
-
-    # 4) estado
+    st.graphviz_chart(step.dot, use_container_width=True, height=560)
     st.write(f"**Acción:** {step.message}")
-    st.code(f"Queue: {step.queue}", language="python")
+    st.code("\n".join([f"L{i}: {row}" for i, row in enumerate(step.levels)]), language="text")

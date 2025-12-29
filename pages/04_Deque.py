@@ -6,7 +6,7 @@ from core.stepper import Stepper
 from core.ui.sidebar import render_sidebar_nav
 
 render_sidebar_nav()
-st.title("Deque (Doble cola) — Visualizador")
+st.title("Deque (Doble cola) — Visualizer")
 
 default_ops = """# Ejemplo
 push_back 8

@@ -7,7 +7,7 @@ from core.ui.sidebar import render_sidebar_nav
 
 render_sidebar_nav()
 
-st.title("Stack (Pila) — Visualizadora (LIFO)")
+st.title("Stack (Pila) — Visualizer (LIFO)")
 
 default_ops = """# Ejemplo
 push 10

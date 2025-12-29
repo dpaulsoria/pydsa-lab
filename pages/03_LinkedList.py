@@ -6,7 +6,7 @@ from core.ui.sidebar import render_sidebar_nav
 
 render_sidebar_nav()
 
-st.title("LInked List - Visualizador")
+st.title("LInked List - Visualizer")
 
 default_ops = """# Ejemplo
 push_front 2
