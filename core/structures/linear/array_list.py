@@ -1,21 +1,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from enum import StrEnum
 from typing import Generic, TypeVar
 
 T = TypeVar("T")
-
-
-class OpKind(StrEnum):
-    GET = "get"
-    SET = "set"
-    APPEND = "append"
-    INSERT = "insert"
-    POP = "pop"
-    POP_AT = "pop_at"
-    REMOVE_FIRST = "remove"
-    CLEAR = "clear"
 
 
 @dataclass

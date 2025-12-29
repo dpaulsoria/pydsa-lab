@@ -2,21 +2,9 @@ from __future__ import annotations
 
 from collections import deque
 from dataclasses import dataclass, field
-from enum import StrEnum
 from typing import Generic, TypeVar
 
 T = TypeVar("T")
-
-
-class OpKind(StrEnum):
-    PUSH_FRONT = "push_front"
-    PUSH_BACK = "push_back"
-    POP_FRONT = "pop_front"
-    POP_BACK = "pop_back"
-    PEEK_FRONT = "peek_front"
-    PEEK_BACK = "peek_back"
-    IS_EMPTY = "is_empty"
-    CLEAR = "clear"
 
 
 @dataclass

@@ -1,19 +1,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from enum import StrEnum
 from typing import Generic, TypeVar
 
 T = TypeVar("T")
-
-
-class OpKind(StrEnum):
-    PUSH = "push"
-    POP = "pop"
-    PEEK = "peek"
-    TO_LIST = "to_list"
-    IS_EMPTY = "is_empty"
-    CLEAR = "clear"
 
 
 @dataclass

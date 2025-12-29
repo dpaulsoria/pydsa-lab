@@ -30,7 +30,7 @@ Cada módulo permite ejecutar operaciones **paso a paso** (Prev/Next/Reset) y ve
 **Asociativos / Hash**
 - ✅ **09 — Hash Table / Map**: `set`, `get`, `has`, `delete`, `snapshot`
 
-> Los nombres exactos de comandos dependen del Enum del archivo `core/structures/*.py` de cada página.
+> Los nombres exactos de comandos dependen del archivo `core/structures/*_ops.py` de cada página.
 
 ---
 

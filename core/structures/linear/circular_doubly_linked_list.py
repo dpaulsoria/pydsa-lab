@@ -1,25 +1,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from enum import StrEnum
 from typing import Generic, TypeVar
 
 T = TypeVar("T")
-
-
-class OpKind(StrEnum):
-    IS_EMPTY = "is_empty"
-    PUSH_FRONT = "push_front"
-    PUSH_BACK = "push_back"
-    POP_FRONT = "pop_front"
-    POP_BACK = "pop_back"
-    ROTATE_LEFT = "rotate_left"
-    ROTATE_RIGHT = "rotate_right"
-    FIND_INDEX = "find"
-    DELETE = "delete"
-    DELETE_ALL = "delete_all"
-    TO_LIST = "to_list"
-    TO_REVERSE_LIST = "to_reverse_list"
 
 
 @dataclass

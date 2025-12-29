@@ -1,9 +1,18 @@
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
+from enum import StrEnum
 from typing import Any
 
-from core.structures.linear.stack import OpKind, Stack
+from core.structures.linear.stack import Stack
+
+
+class OpKind(StrEnum):
+    PUSH = "push"
+    POP = "pop"
+    PEEK = "peek"
+    CLEAR = "clear"
 
 
 @dataclass(frozen=True)
@@ -36,54 +45,69 @@ def parse_operations(text: str) -> list[Operation]:
         parts = line.split()
         cmd = parts[0].lower()
 
-        if cmd == OpKind.PUSH:
+        try:
+            kind = OpKind(cmd)
+        except ValueError as err:
+            raise ValueError(
+                f"Línea {i}: comando no válido '{parts[0]}'. Usa push/pop/peek/clear."
+            ) from err
+
+        if kind == OpKind.PUSH:
             if len(parts) < 2:
                 raise ValueError(f"Línea {i}: 'push' requiere un valor (ej: push 10).")
-            ops.append(Operation(kind=OpKind.PUSH, value=_parse_value(parts[1])))
-        elif cmd == OpKind.POP:
-            ops.append(Operation(kind=OpKind.POP))
-        elif cmd == OpKind.PEEK:
-            ops.append(Operation(kind=OpKind.PEEK))
+            ops.append(Operation(kind=kind, value=_parse_value(parts[1])))
         else:
-            raise ValueError(f"Línea {i}: comando no válido '{parts[0]}'. Usa push/pop/peek.")
+            ops.append(Operation(kind=kind))
+
     return ops
+
+
+Handler = Callable[[Stack[Any], Operation], str]
+
+
+def _h_push(s: Stack[Any], op: Operation) -> str:
+    s.push(op.value)
+    return f"push {op.value}"
+
+
+def _h_pop(s: Stack[Any], op: Operation) -> str:
+    v = s.pop()
+    return f"pop → {v}"
+
+
+def _h_peek(s: Stack[Any], op: Operation) -> str:
+    v = s.peek()
+    return f"peek → {v}"
+
+
+def _h_clear(s: Stack[Any], op: Operation) -> str:
+    s.clear()
+    return "clear"
+
+
+HANDLERS: dict[OpKind, Handler] = {
+    OpKind.PUSH: _h_push,
+    OpKind.POP: _h_pop,
+    OpKind.PEEK: _h_peek,
+    OpKind.CLEAR: _h_clear,
+}
 
 
 def build_steps(ops: list[Operation], dot_builder: callable) -> list[Step]:
     s: Stack[Any] = Stack()
-    steps: list[Step] = [
-        Step(dot=dot_builder(s.to_list()), stack=s.to_list(), message="Estado inicial")
-    ]
+
+    def snap(msg: str) -> Step:
+        vals = s.to_list()
+        return Step(dot=dot_builder(vals), stack=vals, message=msg)
+
+    steps: list[Step] = [snap("Estado inicial")]
 
     for op in ops:
-        if op.kind == OpKind.PUSH:
-            s.push(op.value)
-            steps.append(
-                Step(dot=dot_builder(s.to_list()), stack=s.to_list(), message=f"push {op.value}")
-            )
-
-        elif op.kind == OpKind.POP:
-            try:
-                removed = s.pop()
-                steps.append(
-                    Step(
-                        dot=dot_builder(s.to_list()), stack=s.to_list(), message=f"pop → {removed}"
-                    )
-                )
-            except IndexError:
-                steps.append(
-                    Step(
-                        dot=dot_builder(s.to_list()),
-                        stack=s.to_list(),
-                        message="ERROR: pop en stack vacío (se detuvo la simulación)",
-                    )
-                )
-                break
-
-        else:  # OpKind.PEEK
-            top = s.peek()
-            steps.append(
-                Step(dot=dot_builder(s.to_list()), stack=s.to_list(), message=f"peek → {top}")
-            )
+        try:
+            msg = HANDLERS[op.kind](s, op)
+            steps.append(snap(msg))
+        except IndexError as e:
+            steps.append(snap(f"ERROR: {e} (se detuvo la simulación)"))
+            break
 
     return steps

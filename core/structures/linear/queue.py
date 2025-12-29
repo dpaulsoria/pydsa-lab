@@ -2,19 +2,9 @@ from __future__ import annotations
 
 from collections import deque
 from dataclasses import dataclass, field
-from enum import StrEnum
 from typing import Generic, TypeVar
 
 T = TypeVar("T")
-
-
-class OpKind(StrEnum):
-    ENQUEUE = "enqueue"
-    DEQUEUE = "dequeue"
-    FRONT = "front"
-    TO_LIST = "to_list"
-    IS_EMPTY = "is_empty"
-    CLEAR = "clear"
 
 
 @dataclass
