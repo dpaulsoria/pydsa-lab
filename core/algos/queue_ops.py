@@ -1,11 +1,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Literal
+from typing import Any
 
-from core.structures.queue import Queue
-
-OpKind = Literal["enqueue", "dequeue"]
+from core.structures.queue import OpKind, Queue
 
 
 @dataclass(frozen=True)
@@ -38,11 +36,11 @@ def parse_operations(text: str) -> list[Operation]:
         parts = line.split()
         cmd = parts[0].lower()
 
-        if cmd == "enqueue":
+        if cmd == OpKind.ENQUEUE:
             if len(parts) < 2:
                 raise ValueError(f"Línea {i}: 'enqueue' requiere un valor (ej: enqueue 10).")
             ops.append(Operation(kind="enqueue", value=_parse_value(parts[1])))
-        elif cmd == "dequeue":
+        elif cmd == OpKind.DEQUEUE:
             ops.append(Operation(kind="dequeue"))
         else:
             raise ValueError(f"Línea {i}: comando no válido '{parts[0]}'. Usa enqueue/dequeue.")
@@ -56,12 +54,12 @@ def build_steps(ops: list[Operation], dot_builder: callable) -> list[Step]:
     ]
 
     for op in ops:
-        if op.kind == "enqueue":
+        if op.kind == OpKind.ENQUEUE:
             q.enqueue(op.value)
             steps.append(
                 Step(dot=dot_builder(q.to_list()), queue=q.to_list(), message=f"enqueue {op.value}")
             )
-        else:  # dequeue
+        else:  # OpKind.DEQUEUE
             try:
                 removed = q.dequeue()
                 steps.append(

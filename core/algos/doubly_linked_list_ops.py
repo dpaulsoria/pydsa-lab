@@ -1,21 +1,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Literal
+from typing import Any
 
-from core.structures.doubly_linked_list import DoublyLinkedList
-
-OpKind = Literal[
-    "push_front",
-    "push_back",
-    "pop_front",
-    "pop_back",
-    "delete",
-    "delete_all",
-    "delete_at",
-    "find",
-    "reverse",
-]
+from core.structures.doubly_linked_list import DoublyLinkedList, OpKind
 
 
 @dataclass(frozen=True)
@@ -50,12 +38,18 @@ def parse_operations(text: str) -> list[Operation]:
         parts = line.split()
         cmd = parts[0].lower()
 
-        if cmd in {"push_front", "push_back", "delete", "delete_all", "find"}:
+        if cmd in {
+            OpKind.PUSH_FRONT,
+            OpKind.PUSH_BACK,
+            OpKind.DELETE,
+            OpKind.DELETE_ALL,
+            OpKind.FIND_INDEX,
+        }:
             if len(parts) < 2:
                 raise ValueError(f"Línea {i}: '{cmd}' requiere un valor.")
-            ops.append(Operation(kind=cmd, value=_parse_value(parts[1])))
+            ops.append(Operation(kind=OpKind(cmd), value=_parse_value(parts[1])))
 
-        elif cmd == "delete_at":
+        elif cmd == OpKind.DELETE_AT:
             if len(parts) < 2:
                 raise ValueError(f"Línea {i}: 'delete_at' requiere un índice (ej: delete_at 2).")
             try:
@@ -64,10 +58,10 @@ def parse_operations(text: str) -> list[Operation]:
                 raise ValueError(
                     f"Línea {i}: índice inválido '{parts[1]}'. Debe ser entero."
                 ) from err
-            ops.append(Operation(kind="delete_at", value=idx))
+            ops.append(Operation(kind=OpKind.DELETE_AT, value=idx))
 
-        elif cmd in {"pop_front", "pop_back", "reverse"}:
-            ops.append(Operation(kind=cmd))
+        elif cmd in {OpKind.POP_FRONT, OpKind.POP_BACK, OpKind.REVERSE}:
+            ops.append(Operation(kind=OpKind(cmd)))
 
         else:
             raise ValueError(
@@ -87,7 +81,7 @@ def build_steps(ops: list[Operation], dot_builder: callable) -> list[Step]:
 
     for op in ops:
         try:
-            if op.kind == "push_front":
+            if op.kind == OpKind.PUSH_FRONT:
                 dll.push_front(op.value)
                 steps.append(
                     Step(
@@ -97,7 +91,7 @@ def build_steps(ops: list[Operation], dot_builder: callable) -> list[Step]:
                     )
                 )
 
-            elif op.kind == "push_back":
+            elif op.kind == OpKind.PUSH_BACK:
                 dll.push_back(op.value)
                 steps.append(
                     Step(
@@ -107,7 +101,7 @@ def build_steps(ops: list[Operation], dot_builder: callable) -> list[Step]:
                     )
                 )
 
-            elif op.kind == "pop_front":
+            elif op.kind == OpKind.POP_FRONT:
                 removed = dll.pop_front()
                 steps.append(
                     Step(
@@ -117,7 +111,7 @@ def build_steps(ops: list[Operation], dot_builder: callable) -> list[Step]:
                     )
                 )
 
-            elif op.kind == "pop_back":
+            elif op.kind == OpKind.POP_BACK:
                 removed = dll.pop_back()
                 steps.append(
                     Step(
@@ -127,7 +121,7 @@ def build_steps(ops: list[Operation], dot_builder: callable) -> list[Step]:
                     )
                 )
 
-            elif op.kind == "delete":
+            elif op.kind == OpKind.DELETE:
                 ok = dll.delete(op.value)
                 steps.append(
                     Step(
@@ -137,7 +131,7 @@ def build_steps(ops: list[Operation], dot_builder: callable) -> list[Step]:
                     )
                 )
 
-            elif op.kind == "delete_all":
+            elif op.kind == OpKind.DELETE_ALL:
                 count = dll.delete_all(op.value)
                 steps.append(
                     Step(
@@ -147,7 +141,7 @@ def build_steps(ops: list[Operation], dot_builder: callable) -> list[Step]:
                     )
                 )
 
-            elif op.kind == "delete_at":
+            elif op.kind == OpKind.DELETE_AT:
                 removed = dll.delete_at(int(op.value))  # value es índice
                 steps.append(
                     Step(
@@ -157,7 +151,7 @@ def build_steps(ops: list[Operation], dot_builder: callable) -> list[Step]:
                     )
                 )
 
-            elif op.kind == "find":
+            elif op.kind == OpKind.FIND_INDEX:
                 idx = dll.find_index(op.value)
                 steps.append(
                     Step(
@@ -167,7 +161,7 @@ def build_steps(ops: list[Operation], dot_builder: callable) -> list[Step]:
                     )
                 )
 
-            else:  # reverse
+            else:  # OpKind.REVERSE
                 dll.reverse()
                 steps.append(
                     Step(dot=dot_builder(dll.to_list()), values=dll.to_list(), message="reverse")

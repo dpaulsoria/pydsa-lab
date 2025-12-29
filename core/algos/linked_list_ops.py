@@ -1,12 +1,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Literal
+from typing import Any
 
 from core.render.linked_list_graphviz import linked_list_to_dot
-from core.structures.linked_list import LinkedList
-
-OpKind = Literal["push_front", "append", "delete", "find"]
+from core.structures.linked_list import LinkedList, OpKind
 
 
 @dataclass(frozen=True)
@@ -39,7 +37,7 @@ def parse_operations(text: str) -> list[Operation]:
         parts = line.split()
         cmd = parts[0].lower()
 
-        if cmd in {"push_front", "append", "delete", "find"}:
+        if cmd in {OpKind.PUSH_FRONT, OpKind.APPEND, OpKind.DELETE, OpKind.FIND_INDEX}:
             if len(parts) < 2:
                 raise ValueError(f"Línea {i}: '{cmd}' requiere un valor.")
             ops.append(Operation(kind=cmd, value=_parse_value(parts[1])))
@@ -57,7 +55,7 @@ def build_steps(ops: list[Operation]) -> list[Step]:
     ]
 
     for op in ops:
-        if op.kind == "push_front":
+        if op.kind == OpKind.PUSH_FRONT:
             ll.push_front(op.value)
             steps.append(
                 Step(
@@ -67,7 +65,7 @@ def build_steps(ops: list[Operation]) -> list[Step]:
                 )
             )
 
-        elif op.kind == "append":
+        elif op.kind == OpKind.APPEND:
             ll.append(op.value)
             steps.append(
                 Step(
@@ -77,14 +75,14 @@ def build_steps(ops: list[Operation]) -> list[Step]:
                 )
             )
 
-        elif op.kind == "delete":
+        elif op.kind == OpKind.DELETE:
             ok = ll.delete(op.value)
             msg = f"delete {op.value} → {'OK' if ok else 'NO ENCONTRADO'}"
             steps.append(
                 Step(dot=linked_list_to_dot(ll.to_list()), values=ll.to_list(), message=msg)
             )
 
-        else:  # find
+        else:  # OpKind.FIND_INDEX
             idx = ll.find_index(op.value)
             msg = f"find {op.value} → {idx if idx is not None else 'NO ENCONTRADO'}"
             steps.append(

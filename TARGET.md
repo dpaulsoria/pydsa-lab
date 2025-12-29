@@ -6,8 +6,8 @@
 - Linked List:
   -  [x] simple
   -  [x] doble
-  - circular
-- Skip List
+  -  [x] circular
+- [x] Skip List
 - Buffer circular (ring buffer)
 
 # Asociativas / Hash

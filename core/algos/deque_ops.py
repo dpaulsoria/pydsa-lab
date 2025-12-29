@@ -1,11 +1,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Literal
+from typing import Any
 
-from core.structures.deque_ds import DequeDS
-
-OpKind = Literal["push_front", "push_back", "pop_front", "pop_back"]
+from core.structures.deque_ds import DequeDS, OpKind
 
 
 @dataclass(frozen=True)
@@ -38,11 +36,11 @@ def parse_operations(text: str) -> list[Operation]:
         parts = line.split()
         cmd = parts[0].lower()
 
-        if cmd in {"push_front", "push_back"}:
+        if cmd in {OpKind.PUSH_FRONT, OpKind.PUSH_BACK}:
             if len(parts) < 2:
                 raise ValueError(f"Línea {i}: '{cmd}' requiere un valor.")
             ops.append(Operation(kind=cmd, value=_parse_value(parts[1])))
-        elif cmd in {"pop_front", "pop_back"}:
+        elif cmd in {OpKind.POP_FRONT, OpKind.POP_BACK}:
             ops.append(Operation(kind=cmd))
         else:
             raise ValueError(
@@ -59,7 +57,7 @@ def build_steps(ops: list[Operation], dot_builder: callable) -> list[Step]:
     ]
 
     for op in ops:
-        if op.kind == "push_front":
+        if op.kind == OpKind.PUSH_FRONT:
             d.push_front(op.value)
             steps.append(
                 Step(
@@ -69,7 +67,7 @@ def build_steps(ops: list[Operation], dot_builder: callable) -> list[Step]:
                 )
             )
 
-        elif op.kind == "push_back":
+        elif op.kind == OpKind.PUSH_BACK:
             d.push_back(op.value)
             steps.append(
                 Step(
@@ -77,7 +75,7 @@ def build_steps(ops: list[Operation], dot_builder: callable) -> list[Step]:
                 )
             )
 
-        elif op.kind == "pop_front":
+        elif op.kind == OpKind.POP_FRONT:
             try:
                 removed = d.pop_front()
                 steps.append(
@@ -97,7 +95,7 @@ def build_steps(ops: list[Operation], dot_builder: callable) -> list[Step]:
                 )
                 break
 
-        else:  # pop_back
+        else:  # OpKind.PUSH_BACK
             try:
                 removed = d.pop_back()
                 steps.append(

@@ -1,10 +1,20 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from enum import StrEnum
 from random import Random
 from typing import Generic, TypeVar
 
 T = TypeVar("T")
+
+
+class OpKind(StrEnum):
+    RANDOM_LEVEL = "random_level"
+    SEARCH = "search"
+    SEARCH_TRACE = "search_trace"
+    INSERT = "insert"
+    DELETE = "delete"
+    LEVELS_AS_LISTS = "levels_as_lists"
 
 
 @dataclass

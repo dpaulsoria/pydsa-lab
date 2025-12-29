@@ -1,34 +1,37 @@
 import streamlit as st
 
-from core.algos.skip_list_ops import build_steps, parse_operations
-from core.render.skip_list_graphviz import skip_list_to_dot
+from core.algos.circular_doubly_linked_list_ops import build_steps, parse_operations
+from core.render.circular_doubly_linked_list_graphviz import cdll_to_dot
 from core.stepper import Stepper
 from core.ui.sidebar import render_sidebar_nav
 
 render_sidebar_nav()
-st.title("Skip List — Visualizer")
+st.title("Circular Doubly Linked List — Visualizador")
 
-default_ops = """# Tip: para hacerlo determinista, usa insert VAL NIVEL
-insert 10 2
-insert 20 0
-insert 30 1
-search 20
-delete 10
-search 10
-insert 25 2
+default_ops = """# Ejemplo
+push_back 1
+push_back 2
+push_back 3
+rotate_left 1
+push_front 9
+find 2
+pop_back
+rotate_right 2
+delete 9
+delete_all 2
 """
 
-ops_text = st.text_area("Operaciones (insert/delete/search):", value=default_ops, height=220)
+ops_text = st.text_area("Operaciones:", value=default_ops, height=220)
 
 if st.button("Construir pasos", type="primary"):
     try:
         ops = parse_operations(ops_text)
-        steps = build_steps(ops, dot_builder=skip_list_to_dot)
-        st.session_state["skip_stepper"] = Stepper(steps=steps, index=0)
+        steps = build_steps(ops, dot_builder=cdll_to_dot)
+        st.session_state["cdll_stepper"] = Stepper(steps=steps, index=0)
     except ValueError as e:
         st.error(str(e))
 
-stepper: Stepper | None = st.session_state.get("skip_stepper")
+stepper: Stepper | None = st.session_state.get("cdll_stepper")
 
 if stepper is None:
     st.warning("Pulsa **Construir pasos** para generar la simulación.")
@@ -49,4 +52,4 @@ else:
 
     st.graphviz_chart(step.dot, width="stretch", height="stretch")
     st.write(f"**Acción:** {step.message}")
-    st.code("\n".join([f"L{i}: {row}" for i, row in enumerate(step.levels)]), language="text")
+    st.code(f"CDLL (desde head): {step.values}", language="python")

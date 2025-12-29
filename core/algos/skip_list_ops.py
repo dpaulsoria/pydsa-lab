@@ -1,11 +1,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Literal
+from typing import Any
 
-from core.structures.skip_list import SkipList
-
-OpKind = Literal["insert", "delete", "search"]
+from core.structures.skip_list import OpKind, SkipList
 
 
 @dataclass(frozen=True)
@@ -39,7 +37,7 @@ def parse_operations(text: str) -> list[Operation]:
         parts = line.split()
         cmd = parts[0].lower()
 
-        if cmd == "insert":
+        if cmd == OpKind.INSERT:
             if len(parts) < 2:
                 raise ValueError(f"Línea {i}: 'insert' requiere un valor.")
             val = _parse_value(parts[1])
@@ -53,7 +51,7 @@ def parse_operations(text: str) -> list[Operation]:
                     ) from err
             ops.append(Operation(kind="insert", value=val, level=lvl))
 
-        elif cmd in {"delete", "search"}:
+        elif cmd in {OpKind.DELETE, OpKind.SEARCH}:
             if len(parts) < 2:
                 raise ValueError(f"Línea {i}: '{cmd}' requiere un valor.")
             ops.append(Operation(kind=cmd, value=_parse_value(parts[1])))
@@ -76,18 +74,18 @@ def build_steps(ops: list[Operation], dot_builder: callable) -> list[Step]:
     ]
 
     for op in ops:
-        if op.kind == "insert":
+        if op.kind == OpKind.INSERT:
             ok = sl.insert(op.value, level=op.level)
             msg = f"insert {op.value}" + (f" {op.level}" if op.level is not None else "")
             msg += f" → {'OK' if ok else 'YA EXISTE'}"
             steps.append(Step(dot=dot_builder(levels_now()), levels=levels_now(), message=msg))
 
-        elif op.kind == "delete":
+        elif op.kind == OpKind.DELETE:
             ok = sl.delete(op.value)
             msg = f"delete {op.value} → {'OK' if ok else 'NO ENCONTRADO'}"
             steps.append(Step(dot=dot_builder(levels_now()), levels=levels_now(), message=msg))
 
-        else:  # search
+        else:  # OpKind.SEARCH
             found = sl.search(op.value)
             trace = sl.search_trace(op.value)
 

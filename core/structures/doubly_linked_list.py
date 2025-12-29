@@ -1,9 +1,24 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from enum import StrEnum
 from typing import Generic, TypeVar
 
 T = TypeVar("T")
+
+
+class OpKind(StrEnum):
+    PUSH_FRONT = "push_front"
+    PUSH_BACK = "push_back"
+    POP_FRONT = "pop_front"
+    POP_BACK = "pop_back"
+    DELETE = "delete"
+    DELETE_ALL = "delete_all"
+    DELETE_AT = "delete_at"
+    FIND_INDEX = "find"
+    REVERSE = "reverse"
+    TO_LIST = "to_list"
+    TO_REVERSE_LIST = "to_reverse_list"
 
 
 @dataclass
@@ -138,7 +153,7 @@ class DoublyLinkedList(Generic[T]):
         if nxt is None:
             self.tail = prev
         else:
-            next.prev = prev
+            nxt.prev = prev
 
         node.prev = None
         node.next = None

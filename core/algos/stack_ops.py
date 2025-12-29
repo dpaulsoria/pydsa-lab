@@ -1,11 +1,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Literal
+from typing import Any
 
-from core.structures.stack import Stack
-
-OpKind = Literal["push", "pop", "peek"]
+from core.structures.stack import OpKind, Stack
 
 
 @dataclass(frozen=True)
@@ -38,14 +36,14 @@ def parse_operations(text: str) -> list[Operation]:
         parts = line.split()
         cmd = parts[0].lower()
 
-        if cmd == "push":
+        if cmd == OpKind.PUSH:
             if len(parts) < 2:
                 raise ValueError(f"Línea {i}: 'push' requiere un valor (ej: push 10).")
-            ops.append(Operation(kind="push", value=_parse_value(parts[1])))
-        elif cmd == "pop":
-            ops.append(Operation(kind="pop"))
-        elif cmd == "peek":
-            ops.append(Operation(kind="peek"))
+            ops.append(Operation(kind=OpKind.PUSH, value=_parse_value(parts[1])))
+        elif cmd == OpKind.POP:
+            ops.append(Operation(kind=OpKind.POP))
+        elif cmd == OpKind.PEEK:
+            ops.append(Operation(kind=OpKind.PEEK))
         else:
             raise ValueError(f"Línea {i}: comando no válido '{parts[0]}'. Usa push/pop/peek.")
     return ops
@@ -58,13 +56,13 @@ def build_steps(ops: list[Operation], dot_builder: callable) -> list[Step]:
     ]
 
     for op in ops:
-        if op.kind == "push":
+        if op.kind == OpKind.PUSH:
             s.push(op.value)
             steps.append(
                 Step(dot=dot_builder(s.to_list()), stack=s.to_list(), message=f"push {op.value}")
             )
 
-        elif op.kind == "pop":
+        elif op.kind == OpKind.POP:
             try:
                 removed = s.pop()
                 steps.append(
@@ -82,7 +80,7 @@ def build_steps(ops: list[Operation], dot_builder: callable) -> list[Step]:
                 )
                 break
 
-        else:  # peek
+        else:  # OpKind.PEEK
             top = s.peek()
             steps.append(
                 Step(dot=dot_builder(s.to_list()), stack=s.to_list(), message=f"peek → {top}")

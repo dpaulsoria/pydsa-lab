@@ -1,34 +1,34 @@
 import streamlit as st
 
-from core.algos.skip_list_ops import build_steps, parse_operations
-from core.render.skip_list_graphviz import skip_list_to_dot
+from core.algos.array_list_ops import build_steps, parse_operations
+from core.render.array_list_graphviz import array_list_to_dot
 from core.stepper import Stepper
 from core.ui.sidebar import render_sidebar_nav
 
 render_sidebar_nav()
-st.title("Skip List — Visualizer")
+st.title("Array / List — Visualizador (lista dinámica)")
 
-default_ops = """# Tip: para hacerlo determinista, usa insert VAL NIVEL
-insert 10 2
-insert 20 0
-insert 30 1
-search 20
-delete 10
-search 10
-insert 25 2
+default_ops = """# Ejemplo
+append 10
+append 20
+insert 1 15
+get 2
+set 0 99
+remove 15
+pop
 """
 
-ops_text = st.text_area("Operaciones (insert/delete/search):", value=default_ops, height=220)
+ops_text = st.text_area("Operaciones:", value=default_ops, height=200)
 
 if st.button("Construir pasos", type="primary"):
     try:
         ops = parse_operations(ops_text)
-        steps = build_steps(ops, dot_builder=skip_list_to_dot)
-        st.session_state["skip_stepper"] = Stepper(steps=steps, index=0)
+        steps = build_steps(ops, dot_builder=array_list_to_dot)
+        st.session_state["array_stepper"] = Stepper(steps=steps, index=0)
     except ValueError as e:
         st.error(str(e))
 
-stepper: Stepper | None = st.session_state.get("skip_stepper")
+stepper: Stepper | None = st.session_state.get("array_stepper")
 
 if stepper is None:
     st.warning("Pulsa **Construir pasos** para generar la simulación.")
@@ -47,6 +47,6 @@ else:
     st.caption(f"Paso {stepper.index + 1} / {len(stepper.steps)}")
     step = stepper.current()
 
-    st.graphviz_chart(step.dot, width="stretch", height="stretch")
+    st.graphviz_chart(step.dot, use_container_width=True, height=260)
     st.write(f"**Acción:** {step.message}")
-    st.code("\n".join([f"L{i}: {row}" for i, row in enumerate(step.levels)]), language="text")
+    st.code(f"ArrayList: {step.values}", language="python")
