@@ -47,6 +47,6 @@ else:
     st.caption(f"Paso {stepper.index + 1} / {len(stepper.steps)}")
     step = stepper.current()
 
-    st.graphviz_chart(step.dot, use_container_width=True, height=260)
+    st.graphviz_chart(step.dot, width="stretch", height="stretch")
     st.write(f"**Acción:** {step.message}")
     st.code(f"ArrayList: {step.values}", language="python")
