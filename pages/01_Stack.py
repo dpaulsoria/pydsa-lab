@@ -54,6 +54,6 @@ with colB:
     stepper = st.session_state.get("stack_stepper")
     if stepper is not None:
         step = stepper.current()
-        st.graphviz_chart(step.dot, use_container_width=True, width="stretch", height="stretch")
+        st.graphviz_chart(step.dot, width="stretch", height="stretch")
     else:
         st.info("Aquí se mostrará el diagrama cuando construyas pasos.")

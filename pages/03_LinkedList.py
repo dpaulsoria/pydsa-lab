@@ -44,6 +44,6 @@ else:
             stepper.next()
 
     step = stepper.current()
-    st.graphviz_chart(step.dot, use_container_width=True, width="stretch", height="stretch")
+    st.graphviz_chart(step.dot, width="stretch", height="stretch")
     st.write(f"**Acción:** {step.message}")
     st.code(f"List: {step.values}", language="python")

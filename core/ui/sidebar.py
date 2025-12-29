@@ -12,4 +12,5 @@ def render_sidebar_nav() -> None:
             st.page_link("pages/01_Stack.py", label="Stack (LIFO)")
             st.page_link("pages/02_Queue.py", label="Queue (FIFO)")
             st.page_link("pages/03_LinkedList.py", label="Linked List")
-            st.page_link("pages/04_Deque.py", label="Deque (Doble cola)")
+            st.page_link("pages/04_Deque.py", label="Deque (Double Queue)")
+            st.page_link("pages/05_DoublyLinkedList.py", label="Linked List (Doubly)")

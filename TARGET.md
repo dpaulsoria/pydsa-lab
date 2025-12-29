@@ -1,11 +1,11 @@
 # Lineales
-- Array / List (arreglo, lista dinámica)
-- Stack (pila, LIFO) ✅ (ya)
-- Queue (cola, FIFO) ✅ (ya)
-- Deque (doble cola) ✅ (ya)
+- [ ] Array / List (arreglo, lista dinámica)
+- [x] Stack (pila, LIFO)
+- [x] Queue (cola, FIFO)
+- [x] Deque (doble cola)
 - Linked List:
-  - simple ✅ (ya)
-  - doble
+  -  [x] simple
+  -  [x] doble
   - circular
 - Skip List
 - Buffer circular (ring buffer)

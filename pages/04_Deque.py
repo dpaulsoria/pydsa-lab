@@ -48,6 +48,6 @@ else:
             stepper.next()
 
     step = stepper.current()
-    st.graphviz_chart(step.dot, use_container_width=True, height=520)
+    st.graphviz_chart(step.dot, width="stretch", height="stretch")
     st.write(f"**Acción:** {step.message}")
     st.code(f"Deque: {step.deque}", language="python")
