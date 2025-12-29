@@ -25,7 +25,7 @@ class LinkedList(Generic[T]):
         if self.head is None:
             self.head = Node(value)
             self._size += 1
-            return  # Prevent duplicates
+            return
 
         cur = self.head
         while cur.next is not None:
@@ -33,22 +33,67 @@ class LinkedList(Generic[T]):
         cur.next = Node(value)
         self._size += 1
 
+    def _node_at(self, index: int) -> Node[T]:
+        if index < 0 or index >= self._size:
+            raise IndexError("index out of range")
+
+        cur = self.head
+        for _ in range(index):
+            assert cur is not None
+            cur = cur.next
+
+        assert cur is not None
+        return cur
+
+    def _unlink_head(self) -> Node[T]:
+        if self.head is None:
+            raise IndexError("unlink_head from empty list")
+        removed = self.head
+        self.head = removed.next
+        removed.next = None
+        self._size -= 1
+        return removed
+
+    def _unlink_after(self, prev: Node[T]) -> Node[T]:
+        if prev.next is None:
+            raise IndexError("unlink_after with no text node")
+        removed = prev.next
+        prev.next = removed.next
+        removed.next = None
+        self._size -= 1
+        return removed
+
+    def search(self, value: T) -> Node[T] | None:
+        cur = self.head
+        while cur is not None:
+            if cur.value == value:
+                return cur
+            cur = cur.next
+        return None
+
+    def reverse(self) -> None:
+        prev: Node[T] | None = None
+        cur = self.head
+        while cur is not None:
+            nxt = cur.next
+            cur.next = prev
+            prev = cur
+            cur = nxt
+        self.head = prev
+
     def delete(self, value: T) -> bool:
         if self.head is None:
             return False
 
         if self.head.value == value:
-            self.head = self.head.next
-            self._size -= 1
+            self._unlink_head()
             return True
 
         prev = self.head
         cur = self.head.next
-
         while cur is not None:
             if cur.value == value:
-                prev.next = cur.next
-                self._size -= 1
+                self._unlink_after(prev)
                 return True
             prev = cur
             cur = cur.next
@@ -56,50 +101,35 @@ class LinkedList(Generic[T]):
         return False
 
     def delete_all(self, value: T) -> int:
-        count = 0
-
-        while self.head is not None and self.head.value == value:
-            self.head = self.head.next
-            count += 1
-
-        prev = self.head
-        cur = self.head.next if self.head is not None else None
+        dummy = Node(value, self.head)  # value no importa aquí
+        prev = dummy
+        cur = self.head
+        removed_count = 0
 
         while cur is not None:
             if cur.value == value:
+                # unlink cur: prev.next = cur.next
                 prev.next = cur.next
-                count += 1
+                cur.next = None
+                self._size -= 1
+                removed_count += 1
                 cur = prev.next
             else:
                 prev = cur
                 cur = cur.next
 
-        self._size -= count
-        return count
+        self.head = dummy.next
+        return removed_count
 
     def delete_at(self, index: int) -> T:
         if index < 0 or index >= self._size:
             raise IndexError("index out of range")
-        if self.head is None:
-            raise IndexError("delete_at from empty list")
 
         if index == 0:
-            removed = self.head
-            self.head = self.head.next
-            self._size -= 1
-            return removed.value
+            return self._unlink_head().value
 
-        prev = self.head
-        cur_index = 0
-        while cur_index < index - 1:
-            prev = prev.next
-            cur_index += 1
-
-        removed = prev.next
-        prev.next = removed.next
-        self._size -= 1
-
-        return removed.value
+        prev = self._node_at(index - 1)
+        return self._unlink_after(prev).value
 
     def find_index(self, value: T) -> int | None:
         idx = 0

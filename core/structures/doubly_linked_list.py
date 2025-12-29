@@ -83,11 +83,11 @@ class DoublyLinkedList(Generic[T]):
         count = 0
         cur = self.head
         while cur is not None:
-            next = cur.next
+            nxt = cur.next
             if cur.value == value:
                 self._unlink(cur)
                 count += 1
-            cur = next
+            cur = nxt
         self._size -= count
         return count
 
@@ -128,14 +128,14 @@ class DoublyLinkedList(Generic[T]):
 
     def _unlink(self, node: DNode[T]) -> None:
         prev = node.prev
-        next = node.next
+        nxt = node.next
 
         if prev is None:
-            self.head = next
+            self.head = nxt
         else:
-            prev.next = next
+            prev.next = nxt
 
-        if next is None:
+        if nxt is None:
             self.tail = prev
         else:
             next.prev = prev
