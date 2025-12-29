@@ -2,7 +2,7 @@ from typing import Literal
 
 import streamlit as st
 
-Group = Literal["linear", "hash"]
+Group = Literal["linear", "hash", "trees"]
 
 
 def render_sidebar_nav(active_group: Group | None = None) -> None:
@@ -34,3 +34,6 @@ def render_sidebar_nav(active_group: Group | None = None) -> None:
             st.page_link("pages/09_HashTable.py", label="Hash Table / Map")
             st.page_link("pages/10_Set.py", label="Set (HashSet)")
             st.page_link("pages/11_OrderedMap.py", label="Ordered Map")
+
+        with st.expander("Trees", expanded=(group == "trees")):
+            st.page_link("pages/12_BinaryTree.py", label="Binary Tree")

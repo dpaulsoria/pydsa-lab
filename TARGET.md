@@ -12,18 +12,18 @@
 
 # Asociativas / Hash
 - [x] Hash Table / Dictionary / Map
-- [ ] Set (conjunto)
-- [ ] Ordered Map / Ordered Set (mapa/conjunto ordenado)
+- [x] Set (conjunto)
+- [x] Ordered Map / Ordered Set (mapa/conjunto ordenado)
 
 # Arboles
-- Binary Tree (árbol binario)
-- BST (Binary Search Tree)
-- Árboles balanceados: AVL, Red-Black
-- Heap (min-heap / max-heap) (técnicamente árbol + priority queue)
-- Trie (prefijos)
-- Segment Tree
-- Fenwick Tree / BIT
-- B-Tree / B+Tree (muy usado en bases de datos)
+- [x] Binary Tree (árbol binario)
+- [ ] BST (Binary Search Tree)
+- [ ] Árboles balanceados: AVL, Red-Black
+- [ ] Heap (min-heap / max-heap) (técnicamente árbol + priority queue)
+- [ ] Trie (prefijos)
+- [ ] Segment Tree
+- [ ] Fenwick Tree / BIT
+- [ ] B-Tree / B+Tree (muy usado en bases de datos)
 
 # Colas por prioridad
 - Priority Queue (cola de prioridad)

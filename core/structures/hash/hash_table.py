@@ -2,20 +2,10 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 from dataclasses import dataclass
-from enum import StrEnum
 from typing import Generic, TypeVar
 
 K = TypeVar("K")
 V = TypeVar("V")
-
-
-class OpKind(StrEnum):
-    SET = "set"
-    GET = "get"
-    HAS = "has"
-    DELETE = "delete"
-    SNAPSHOT = "snapshot"
-    ITEMS = "items"
 
 
 def stable_hash(key: object) -> int:

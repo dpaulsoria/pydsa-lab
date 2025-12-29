@@ -28,7 +28,12 @@ Cada módulo permite ejecutar operaciones **paso a paso** (Prev/Next/Reset) y ve
 - ✅ **08 — Ring Buffer**: `write`, `read`, `peek`, `write_over`
 
 **Asociativos / Hash**
-- ✅ **09 — Hash Table / Map**: `set`, `get`, `has`, `delete`, `snapshot`
+- ✅ **09 — Hash Table / Map**: `set`, `get`, `has`, `delete`, `snapshot`, `items`
+- ✅ **10 — Set (conjunto)**: `add`, `remove`, `contains`, `snapshot`
+- ✅ **11 — Ordered Map / Ordered Set**: `set`, `get`, `del`, `has`
+
+**Arboles**
+- ✅ **12 — Binary Tree**: `insert`, `delete`, `find`, `traverse`, `clear`
 
 > Los nombres exactos de comandos dependen del archivo `core/structures/*_ops.py` de cada página.
 
