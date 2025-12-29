@@ -19,3 +19,4 @@ def render_sidebar_nav() -> None:
                 "pages/06_CircularDoublyLinkedList.py", label="Circular Doubly Linked List"
             )
             st.page_link("pages/07_SkipList.py", label="Skip List")
+            st.page_link("pages/08_RingBuffer.py", label="Ring Buffer")
