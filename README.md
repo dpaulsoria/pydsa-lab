@@ -25,8 +25,12 @@ Cada módulo permite ejecutar operaciones **paso a paso** (Prev/Next/Reset) y ve
 - ✅ **05 — Doubly Linked List**
 - ✅ **06 — Circular Doubly Linked List**
 - ✅ **07 — Skip List**: `insert`, `delete`, `search` (con resaltado del recorrido)
+- ✅ **08 — Ring Buffer**: `write`, `read`, `peek`, `write_over`
 
-> Los nombres exactos de comandos dependen del archivo `core/algos/*_ops.py` de cada página.
+**Asociativos / Hash**
+- ✅ **09 — Hash Table / Map**: `set`, `get`, `has`, `delete`, `snapshot`
+
+> Los nombres exactos de comandos dependen del Enum del archivo `core/structures/*.py` de cada página.
 
 ---
 

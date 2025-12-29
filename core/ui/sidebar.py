@@ -32,3 +32,5 @@ def render_sidebar_nav(active_group: Group | None = None) -> None:
 
         with st.expander("Hash", expanded=(group == "hash")):
             st.page_link("pages/09_HashTable.py", label="Hash Table / Map")
+            st.page_link("pages/10_Set.py", label="Set (HashSet)")
+            st.page_link("pages/11_OrderedMap.py", label="Ordered Map")
