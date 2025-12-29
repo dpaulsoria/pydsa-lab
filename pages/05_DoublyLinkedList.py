@@ -1,11 +1,12 @@
 import streamlit as st
 
-from core.algos.doubly_linked_list_ops import build_steps, parse_operations
-from core.render.doubly_linked_list_graphviz import doubly_linked_list_to_dot
+from core.algos.linear.doubly_linked_list_ops import build_steps, parse_operations
+from core.render.linear.doubly_linked_list_graphviz import doubly_linked_list_to_dot
 from core.stepper import Stepper
 from core.ui.sidebar import render_sidebar_nav
 
-render_sidebar_nav()
+render_sidebar_nav("linear")
+
 st.title("Doubly Linked List — Visualizer")
 
 default_ops = """# Ejemplo

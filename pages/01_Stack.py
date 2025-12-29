@@ -1,11 +1,11 @@
 import streamlit as st
 
-from core.algos.stack_ops import build_steps, parse_operations
-from core.render.stack_graphviz import stack_to_dot
+from core.algos.linear.stack_ops import build_steps, parse_operations
+from core.render.linear.stack_graphviz import stack_to_dot
 from core.stepper import Stepper
 from core.ui.sidebar import render_sidebar_nav
 
-render_sidebar_nav()
+render_sidebar_nav("linear")
 
 st.title("Stack (Pila) — Visualizer (LIFO)")
 

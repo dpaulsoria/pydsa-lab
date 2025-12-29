@@ -1,5 +1,5 @@
 # Lineales
-- [ ] Array / List (arreglo, lista dinámica)
+- [x] Array / List (arreglo, lista dinámica)
 - [x] Stack (pila, LIFO)
 - [x] Queue (cola, FIFO)
 - [x] Deque (doble cola)
@@ -8,12 +8,12 @@
   -  [x] doble
   -  [x] circular
 - [x] Skip List
-- Buffer circular (ring buffer)
+- [x] Buffer circular (ring buffer)
 
 # Asociativas / Hash
-- Hash Table / Dictionary / Map
-- Set (conjunto)
-- Ordered Map / Ordered Set (mapa/conjunto ordenado)
+- [x] Hash Table / Dictionary / Map
+- [ ] Set (conjunto)
+- [ ] Ordered Map / Ordered Set (mapa/conjunto ordenado)
 
 # Arboles
 - Binary Tree (árbol binario)

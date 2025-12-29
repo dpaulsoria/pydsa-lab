@@ -1,11 +1,12 @@
 import streamlit as st
 
-from core.algos.ring_buffer_ops import build_steps, parse_operations
-from core.render.ring_buffer_graphviz import ring_buffer_to_dot
+from core.algos.linear.ring_buffer_ops import build_steps, parse_operations
+from core.render.linear.ring_buffer_graphviz import ring_buffer_to_dot
 from core.stepper import Stepper
 from core.ui.sidebar import render_sidebar_nav
 
-render_sidebar_nav()
+render_sidebar_nav("linear")
+
 st.title("Ring Buffer — Visualizador (buffer circular)")
 
 capacity = st.number_input("Capacidad", min_value=1, max_value=64, value=5, step=1)

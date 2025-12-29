@@ -1,11 +1,12 @@
 import streamlit as st
 
-from core.algos.deque_ops import build_steps, parse_operations
-from core.render.deque_graphviz import deque_to_dot
+from core.algos.linear.deque_ops import build_steps, parse_operations
+from core.render.linear.deque_graphviz import deque_to_dot
 from core.stepper import Stepper
 from core.ui.sidebar import render_sidebar_nav
 
-render_sidebar_nav()
+render_sidebar_nav("linear")
+
 st.title("Deque (Doble cola) — Visualizer")
 
 default_ops = """# Ejemplo

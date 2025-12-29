@@ -1,11 +1,12 @@
 import streamlit as st
 
-from core.algos.skip_list_ops import build_steps, parse_operations
-from core.render.skip_list_graphviz import skip_list_to_dot
+from core.algos.linear.skip_list_ops import build_steps, parse_operations
+from core.render.linear.skip_list_graphviz import skip_list_to_dot
 from core.stepper import Stepper
 from core.ui.sidebar import render_sidebar_nav
 
-render_sidebar_nav()
+render_sidebar_nav("linear")
+
 st.title("Skip List — Visualizer")
 
 default_ops = """# Tip: para hacerlo determinista, usa insert VAL NIVEL

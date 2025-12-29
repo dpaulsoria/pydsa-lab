@@ -1,11 +1,11 @@
 import streamlit as st
 
-from core.algos.queue_ops import build_steps, parse_operations
-from core.render.queue_graphviz import queue_to_dot
+from core.algos.linear.queue_ops import build_steps, parse_operations
+from core.render.linear.queue_graphviz import queue_to_dot
 from core.stepper import Stepper
 from core.ui.sidebar import render_sidebar_nav
 
-render_sidebar_nav()
+render_sidebar_nav("linear")
 
 st.title("Queue (Cola) — Visualizer (FIFO)")
 

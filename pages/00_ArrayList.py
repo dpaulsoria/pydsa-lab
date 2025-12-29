@@ -1,11 +1,11 @@
 import streamlit as st
 
-from core.algos.array_list_ops import build_steps, parse_operations
-from core.render.array_list_graphviz import array_list_to_dot
+from core.algos.linear.array_list_ops import build_steps, parse_operations
+from core.render.linear.array_list_graphviz import array_list_to_dot
 from core.stepper import Stepper
 from core.ui.sidebar import render_sidebar_nav
 
-render_sidebar_nav()
+render_sidebar_nav("linear")
 st.title("Array / List — Visualizador (lista dinámica)")
 
 default_ops = """# Ejemplo

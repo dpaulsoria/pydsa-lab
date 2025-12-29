@@ -1,11 +1,12 @@
 import streamlit as st
 
-from core.algos.circular_doubly_linked_list_ops import build_steps, parse_operations
-from core.render.circular_doubly_linked_list_graphviz import cdll_to_dot
+from core.algos.linear.circular_doubly_linked_list_ops import build_steps, parse_operations
+from core.render.linear.circular_doubly_linked_list_graphviz import cdll_to_dot
 from core.stepper import Stepper
 from core.ui.sidebar import render_sidebar_nav
 
-render_sidebar_nav()
+render_sidebar_nav("linear")
+
 st.title("Circular Doubly Linked List — Visualizador")
 
 default_ops = """# Ejemplo
