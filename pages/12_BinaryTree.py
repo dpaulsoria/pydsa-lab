@@ -6,7 +6,7 @@ from core.stepper import Stepper
 from core.ui.sidebar import render_sidebar_nav
 
 render_sidebar_nav("trees")
-st.title("Binary Tree — Visualizador (árbol binario)")
+st.title("Binary Tree — Visualizador")
 
 default_ops = """# Ejemplo
 insert 10

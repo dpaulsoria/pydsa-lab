@@ -12,6 +12,7 @@ class OpKind(StrEnum):
     INSERT = "insert"
     DELETE = "delete"
     FIND = "find"
+    HAS = "has"
     TRAVERSE = "traverse"
     CLEAR = "clear"
 
@@ -101,6 +102,11 @@ def _h_find(bt: BinaryTree[Any], op: Operation) -> tuple[str, Any | None]:
     return (f"find {op.a} → {ok}", op.a if ok else None)
 
 
+def _h_has(bt: BinaryTree[Any], op: Operation) -> tuple[str, Any | None]:
+    ok = bt.has(op.a)
+    return (f"has {op.a} → {ok}", op.a if ok else None)
+
+
 def _h_traverse(bt: BinaryTree[Any], op: Operation) -> tuple[str, Any | None]:
     kind = op.b
     if kind == "inorder":
@@ -123,6 +129,7 @@ HANDLERS: dict[OpKind, Handler] = {
     OpKind.INSERT: _h_insert,
     OpKind.DELETE: _h_delete,
     OpKind.FIND: _h_find,
+    OpKind.HAS: _h_has,
     OpKind.TRAVERSE: _h_traverse,
     OpKind.CLEAR: _h_clear,
 }

@@ -51,7 +51,21 @@ class BinaryTree(Generic[T]):
             q.append(cur.left)
             q.append(cur.right)
 
-    def find(self, value: T) -> bool:
+    def find(self, value: T) -> BTNode[T] | None:
+        if self.root is None:
+            return None
+        q: deque[BTNode[T]] = deque([self.root])
+        while q:
+            cur = q.popleft()
+            if cur.value == value:
+                return cur
+            if cur.left is not None:
+                q.append(cur.left)
+            if cur.right is not None:
+                q.append(cur.right)
+        return None
+
+    def has(self, value: T) -> bool:
         if self.root is None:
             return False
         q: deque[BTNode[T]] = deque([self.root])
@@ -126,6 +140,15 @@ class BinaryTree(Generic[T]):
         return True
 
     # ---------- Traversals ----------
+    """
+    TREE:
+              4
+        2           6
+    1       3   5       7
+
+    INORDER: 1 2 3 4 5 6 7
+    """
+
     def inorder(self) -> list[T]:
         out: list[T] = []
 
@@ -138,6 +161,15 @@ class BinaryTree(Generic[T]):
 
         dfs(self.root)
         return out
+
+    """
+    TREE:
+              4
+        2           6
+    1       3   5       7
+
+    PREORDER: 4 2 1 3 6 5 7
+    """
 
     def preorder(self) -> list[T]:
         out: list[T] = []
@@ -152,6 +184,15 @@ class BinaryTree(Generic[T]):
         dfs(self.root)
         return out
 
+    """
+    TREE:
+              4
+        2           6
+    1       3   5       7
+
+    POSTORDER: 1 3 2 5 7 6 4
+    """
+
     def postorder(self) -> list[T]:
         out: list[T] = []
 
@@ -165,7 +206,17 @@ class BinaryTree(Generic[T]):
         dfs(self.root)
         return out
 
+    """
+    TREE:
+              4
+        2           6
+    1       3   5       7
+
+    BFS: 4 2 6 1 3 5 7
+    """
+
     def level_order(self) -> list[T]:
+        """BFS (level-order)"""
         if self.root is None:
             return []
         out: list[T] = []

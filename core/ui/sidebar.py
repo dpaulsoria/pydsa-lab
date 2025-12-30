@@ -37,3 +37,4 @@ def render_sidebar_nav(active_group: Group | None = None) -> None:
 
         with st.expander("Trees", expanded=(group == "trees")):
             st.page_link("pages/12_BinaryTree.py", label="Binary Tree")
+            st.page_link("pages/13_BinarySearchTree.py", label="Binary Search Tree (BST)")
