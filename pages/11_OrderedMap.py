@@ -6,7 +6,7 @@ from core.stepper import Stepper
 from core.ui.sidebar import render_sidebar_nav
 
 render_sidebar_nav("hash")
-st.title("Ordered Map — Visualizador (insertion-ordered)")
+st.title("Ordered Map — Visualizer (insertion-ordered)")
 
 capacity = st.number_input(
     "Buckets (capacidad inicial)", min_value=4, max_value=64, value=8, step=1

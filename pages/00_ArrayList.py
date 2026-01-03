@@ -18,35 +18,45 @@ remove 15
 pop
 """
 
-ops_text = st.text_area("Operaciones:", value=default_ops, height=200)
+colA, colB = st.columns(2, gap="large")
 
-if st.button("Construir pasos", type="primary"):
-    try:
-        ops = parse_operations(ops_text)
-        steps = build_steps(ops, dot_builder=array_list_to_dot)
-        st.session_state["array_stepper"] = Stepper(steps=steps, index=0)
-    except ValueError as e:
-        st.error(str(e))
+with colA:
+    ops_text = st.text_area("Operaciones:", value=default_ops, height=200)
 
-stepper: Stepper | None = st.session_state.get("array_stepper")
+    if st.button("Construir pasos", type="primary"):
+        try:
+            ops = parse_operations(ops_text)
+            steps = build_steps(ops, dot_builder=array_list_to_dot)
+            st.session_state["array_stepper"] = Stepper(steps=steps, index=0)
+        except ValueError as e:
+            st.error(str(e))
 
-if stepper is None:
-    st.warning("Pulsa **Construir pasos** para generar la simulación.")
-else:
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        if st.button("Prev", disabled=not stepper.can_prev()):
-            stepper.prev()
-    with c2:
-        if st.button("Reset"):
-            stepper.reset()
-    with c3:
-        if st.button("Next", disabled=not stepper.can_next()):
-            stepper.next()
+    stepper: Stepper | None = st.session_state.get("array_stepper")
 
-    st.caption(f"Paso {stepper.index + 1} / {len(stepper.steps)}")
-    step = stepper.current()
+    if stepper is None:
+        st.warning("Pulsa **Construir pasos** para generar la simulación.")
+    else:
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            if st.button("Prev", disabled=not stepper.can_prev()):
+                stepper.prev()
+        with c2:
+            if st.button("Reset"):
+                stepper.reset()
+        with c3:
+            if st.button("Next", disabled=not stepper.can_next()):
+                stepper.next()
 
-    st.graphviz_chart(step.dot, width="stretch", height="stretch")
-    st.write(f"**Acción:** {step.message}")
-    st.code(f"ArrayList: {step.values}", language="python")
+        st.caption(f"Paso {stepper.index + 1} / {len(stepper.steps)}")
+        step = stepper.current()
+
+        st.write(f"**Acción:** {step.message}")
+        st.code(f"ArrayList: {step.values}", language="python")
+
+with colB:
+    stepper: Stepper | None = st.session_state.get("array_stepper")
+
+    if stepper is None:
+        st.info("Aquí se mostrará el diagrama cuando construyas pasos.")
+    else:
+        st.graphviz_chart(step.dot, width="stretch", height="stretch")

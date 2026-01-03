@@ -1,6 +1,7 @@
 import streamlit as st
 
 from core.algos.linear.linked_list_ops import build_steps, parse_operations
+from core.render.linear.linked_list_graphviz import linked_list_to_dot
 from core.stepper import Stepper
 from core.ui.sidebar import render_sidebar_nav
 
@@ -22,7 +23,7 @@ ops_text = st.text_area("Operaciones:", value=default_ops, height=180)
 if st.button("Construir pasos", type="primary"):
     try:
         ops = parse_operations(ops_text)
-        steps = build_steps(ops)
+        steps = build_steps(ops, linked_list_to_dot)
         st.session_state["ll_stepper"] = Stepper(steps=steps, index=0)
     except ValueError as e:
         st.error(str(e))

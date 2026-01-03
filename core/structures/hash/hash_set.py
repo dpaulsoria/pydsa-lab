@@ -10,7 +10,7 @@ _PRESENT = object()
 
 
 class HashSet(Generic[T]):
-    def __init__(self, capacity: int = 8) -> None:
+    def __init__(self, capacity: int = 4) -> None:
         self._ht: HashTable[T, object] = HashTable(capacity=capacity)
 
     def __len__(self) -> int:

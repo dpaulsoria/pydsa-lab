@@ -6,7 +6,7 @@ from core.stepper import Stepper
 from core.ui.sidebar import render_sidebar_nav
 
 render_sidebar_nav("hash")
-st.title("Hash Table / Dictionary / Map — Visualizador")
+st.title("Hash Table / Dictionary / Map — Visualizer")
 
 capacity = st.number_input(
     "Buckets (capacidad inicial)", min_value=4, max_value=64, value=8, step=1

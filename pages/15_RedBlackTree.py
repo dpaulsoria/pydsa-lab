@@ -6,7 +6,7 @@ from core.stepper import Stepper
 from core.ui.sidebar import render_sidebar_nav
 
 render_sidebar_nav("trees")
-st.title("Red-Black Tree (LLRB) — Visualizador")
+st.title("Red-Black Tree (LLRB) — Visualizer")
 
 default_ops = """# Inserciones típicas que fuerzan rotaciones/flip-colors
 insert 10

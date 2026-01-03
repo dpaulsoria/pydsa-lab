@@ -7,7 +7,7 @@ from core.ui.sidebar import render_sidebar_nav
 
 render_sidebar_nav("linear")
 
-st.title("Ring Buffer — Visualizador (buffer circular)")
+st.title("Ring Buffer — Visualizer (buffer circular)")
 
 capacity = st.number_input("Capacidad", min_value=1, max_value=64, value=5, step=1)
 

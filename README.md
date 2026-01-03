@@ -14,6 +14,10 @@ Cada módulo permite ejecutar operaciones **paso a paso** (Prev/Next/Reset) y ve
 
 ---
 
+## Screenshots
+![stack.png](assets/stack.png)
+![hash_set.png](assets/hash_set.png)
+![avl_tree.png](assets/avl_tree.png)
 ## 🧱 Módulos actuales
 
 **Lineales**

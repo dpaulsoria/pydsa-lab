@@ -54,4 +54,4 @@ else:
 
     # 4) estado
     st.write(f"**Acción:** {step.message}")
-    st.code(f"Queue: {step.queue}", language="python")
+    st.code(f"Queue: {step.values}", language="python")

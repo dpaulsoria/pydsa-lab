@@ -8,7 +8,7 @@ from core.stepper import Stepper
 from core.ui.sidebar import render_sidebar_nav
 
 render_sidebar_nav("trees")
-st.title("Binary Search Tree (BST) — Visualizador")
+st.title("Binary Search Tree (BST) — Visualizer")
 
 default_ops = """# Inserta
 insert 4

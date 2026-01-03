@@ -6,10 +6,10 @@ from core.stepper import Stepper
 from core.ui.sidebar import render_sidebar_nav
 
 render_sidebar_nav("hash")
-st.title("Set (HashSet) — Visualizador")
+st.title("Set (HashSet) — Visualizer")
 
 capacity = st.number_input(
-    "Buckets (capacidad inicial)", min_value=4, max_value=64, value=8, step=1
+    "Buckets (capacidad inicial)", min_value=4, max_value=64, value=4, step=1
 )
 
 default_ops = """# Ejemplo
@@ -35,24 +35,27 @@ stepper: Stepper | None = st.session_state.get("set_stepper")
 if stepper is None:
     st.warning("Pulsa **Construir pasos** para generar la simulación.")
 else:
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        if st.button("Prev", disabled=not stepper.can_prev()):
-            stepper.prev()
-    with c2:
-        if st.button("Reset"):
-            stepper.reset()
-    with c3:
-        if st.button("Next", disabled=not stepper.can_next()):
-            stepper.next()
-
-    st.caption(f"Paso {stepper.index + 1} / {len(stepper.steps)}")
     step = stepper.current()
-    st.write(f"**Acción:** {step.message}")
-    st.code(f"Set: {step.values}", language="python")
 
-if stepper is not None:
-    step = stepper.current()
-    st.graphviz_chart(step.dot, width="stretch", height="stretch")
-else:
-    st.info("Aquí se mostrará el diagrama cuando construyas pasos.")
+    col_info, col_graph = st.columns([1, 2], gap="large")
+
+    with col_info:
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            if st.button("Prev", disabled=not stepper.can_prev()):
+                stepper.prev()
+        with c2:
+            if st.button("Reset"):
+                stepper.reset()
+        with c3:
+            if st.button("Next", disabled=not stepper.can_next()):
+                stepper.next()
+
+        st.caption(f"Paso {stepper.index + 1} / {len(stepper.steps)}")
+        step = stepper.current()
+        st.write(f"**Acción:** {step.message}")
+        st.code(f"Set: {step.values}", language="python")
+
+    with col_graph:
+        st.markdown("### Diagrama")
+        st.graphviz_chart(step.dot, width="stretch")
