@@ -19,24 +19,56 @@ Cada módulo permite ejecutar operaciones **paso a paso** (Prev/Next/Reset) y ve
 **Lineales**
 - ✅ **00 — Array / List** (lista dinámica): `append`, `insert`, `get`, `set`, `remove`, `pop`, `pop_at`, `clear`
 - ✅ **01 — Stack (LIFO)**: `push`, `pop`, `peek`
-- ✅ **02 — Queue (FIFO)**: `enqueue`, `dequeue`, `peek` *(si aplica según tu implementación)*
-- ✅ **03 — Deque**: `push_front`, `push_back`, `pop_front`, `pop_back`, `peek_*`
-- ✅ **04 — Singly Linked List**: `push_front`, `append`, `delete`, `delete_all`, `delete_at`, `search`, `reverse`
-- ✅ **05 — Doubly Linked List**
-- ✅ **06 — Circular Doubly Linked List**
-- ✅ **07 — Skip List**: `insert`, `delete`, `search` (con resaltado del recorrido)
-- ✅ **08 — Ring Buffer**: `write`, `read`, `peek`, `write_over`
+- ✅ **02 — Queue (FIFO)**: `enqueue`, `dequeue`, `front` *(o `peek`, según implementación)*, `clear`
+- ✅ **03 — Deque**: `push_front`, `push_back`, `pop_front`, `pop_back`, `peek_front`, `peek_back`, `clear`
+- ✅ **04 — Singly Linked List**: `push_front`, `append`, `delete`, `delete_all`, `delete_at`, `search`, `find`, `find_index`, `reverse`, `to_list`
+- ✅ **05 — Doubly Linked List**: `push_front`, `push_back`, `pop_front`, `pop_back`, `delete`, `delete_all`, `delete_at`, `find_index`, `reverse`, `to_list`, `to_reverse_list`
+- ✅ **06 — Circular Doubly Linked List**: `push_front`, `push_back`, `pop_front`, `pop_back`, `delete`, `delete_all`, `find_index`, `rotate_left`, `rotate_right`, `to_list`, `to_reverse_list`
+- ✅ **07 — Skip List**: `insert`, `delete`, `search`, `search_trace`, `levels_as_lists` *(resaltado del recorrido)*
+- ✅ **08 — Ring Buffer**: `write`, `read`, `peek`, `clear`, `write_over`, `snapshot`
 
 **Asociativos / Hash**
 - ✅ **09 — Hash Table / Map**: `set`, `get`, `has`, `delete`, `snapshot`, `items`
-- ✅ **10 — Set (conjunto)**: `add`, `remove`, `contains`, `snapshot`
-- ✅ **11 — Ordered Map / Ordered Set**: `set`, `get`, `del`, `has`
+- ✅ **10 — Set (conjunto)**: `add`, `remove`, `contains`, `to_list`, `snapshot`
+- ✅ **11 — Ordered Map / Ordered Set**: `set`, `get`, `has`, `delete`, `items` *(en algunos casos `items()` es generador)*
 
 **Arboles**
-- ✅ **12 — Binary Tree**: `insert`, `delete`, `find`, `traverse`, `clear`
+- ✅ **12 — Binary Tree**: `insert`, `delete`, `find/contains`, `inorder`, `preorder`, `postorder`, `bfs`, `clear`, `height`, `snapshot`
+- ✅ **13 — Binary Search Tree (BST)**: `insert`, `delete`, `contains`, `min_value`, `max_value`, `inorder`, `preorder`, `postorder`, `bfs`, `height`, `is_valid_bst`, `search_trace`, `snapshot`
+- ✅ **14 — AVL Tree (Balanceado)**: `insert`, `delete`, `contains`, `min_value`, `max_value`, `rotations` *(interno)*, `height`, `is_valid_avl`, `inorder/preorder/postorder/bfs`, `search_trace`, `snapshot`
+- ✅ **15 — Red-Black Tree (LLRB)**: `insert`, `delete`, `contains`, `min_value`, `max_value`, `rotations/flip_colors` *(interno)*, `is_valid_llrb`, `inorder/preorder/postorder/bfs`, `search_trace`, `snapshot`
 
 > Los nombres exactos de comandos dependen del archivo `core/structures/*_ops.py` de cada página.
 
+## 🛣️ Roadmap: Módulos futuros
+**Arboles**
+- **16 — Heap (min-heap/max-heap)**
+- **17 — Trie (prefijos)**
+- **18 — Segment Trie**
+- **19 — Fenwick Tree / BIT**
+- **20 — B-Tree / B+Tree**
+
+**Colas de Prioridad**
+- **21 — Priority Queue**
+- **22 — Heap**
+- **23 — Fibonacci Heap**
+- **24 — Binomial Heap**
+
+**Estructuras Especiales**
+- **25 — Union-Find / Disjoint Set (DSU)**
+- **26 — LRU Cache (cash + doubly linked list)**
+- **27 — Bloom Filter (probabilística)**
+- **28 — Bitset / Bitmap**
+- **29 — Sparse Matrix (matriz dispersa)**
+
+**Persistentes / Inmutables (CS)**
+- **30 — Persistent list / Tree**
+- **31 — Rope (strings grandes)**
+- **32 — Hash Array Mapped Trie (HAMT)**
+
+**Concurrentes (Advanced)**
+- **33 — Lock-free queue/stack**
+- **34 — Concurrent hash map**
 ---
 
 ## 📦 Requisitos
@@ -178,16 +210,6 @@ PyDSA Lab/
 
 ---
 
-## 🛣️ Roadmap (próximos módulos)
-
-- ⏳ **Ring Buffer (buffer circular)** (array fijo + índices head/tail)
-- Sorting Visualizer (Bubble/Insertion/Selection)
-- Hash Table (buckets/colisiones)
-- Trees (BST / Heap)
-- Graphs (BFS/DFS/Dijkstra)
-
----
-
 ## 🧩 Ideas de mejora
 
 - Modo Play/Pause con velocidad
@@ -200,4 +222,4 @@ PyDSA Lab/
 
 ## 📄 Licencia
 
-MIT
+SPDX-License-Identifier: MIT
