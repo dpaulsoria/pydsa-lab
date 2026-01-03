@@ -17,8 +17,10 @@
 
 # Arboles
 - [x] Binary Tree (árbol binario)
-- [ ] BST (Binary Search Tree)
-- [ ] Árboles balanceados: AVL, Red-Black
+- [x] BST (Binary Search Tree)
+- Árboles balanceados:
+  - [x] AVL
+  - [x] Red-Black
 - [ ] Heap (min-heap / max-heap) (técnicamente árbol + priority queue)
 - [ ] Trie (prefijos)
 - [ ] Segment Tree
