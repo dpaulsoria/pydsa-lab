@@ -10,8 +10,8 @@ def test_binary_tree_structure_smoke() -> None:
     bt.insert(30)
 
     assert len(bt) == 3
-    assert bt.find(20) is True
-    assert bt.find(99) is False
+    assert bt.has(20) is True
+    assert bt.has(99) is False
 
     assert bt.delete(20) is True
     assert bt.delete(99) is False

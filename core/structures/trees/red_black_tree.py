@@ -88,7 +88,7 @@ class RedBlackTree(Generic[T]):
 
         # If both children of root are black, then temporarily set root to red
         # To facilitate the "move_red_*" on the descent
-        if not self._is_red(self.root.left) and not self.is_red(self.root.right):
+        if not self._is_red(self.root.left) and not self._is_red(self.root.right):
             self.root.red = True
 
         self.root = self._delete_rec(self.root, value)
@@ -187,7 +187,7 @@ class RedBlackTree(Generic[T]):
                 return False
 
             # No two consecutive reds (a red node cannot have a red child)
-            if self.is_red(n) and (self._is_red(n.left) or self._is_red(n.right)):
+            if self._is_red(n) and (self._is_red(n.left) or self._is_red(n.right)):
                 return False
 
             return check_rules(n.left, low, n.value) and check_rules(n.right, n.value, high)
